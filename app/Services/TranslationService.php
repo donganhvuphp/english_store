@@ -42,7 +42,9 @@ class TranslationService
                 foreach ($params['translate'] as $key => $value) {
                     $vocabulary[] = [
                         'text' => $key,
-                        'translate' => $value
+                        'translate' => $value['result'],
+                        'spelling' => $value['spelling'],
+                        'pronounce' => $value['audio']
                     ];
                 }
             }

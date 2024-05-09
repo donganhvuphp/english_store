@@ -53,31 +53,44 @@ $(document).ready(function () {
                         }
                     }
                 }
-                $(document).find('.data-translate').empty();
-
-                if (Object.keys(translateData).length) {
-                    $(document).find('.translate-result').removeClass('d-none');
-                } else {
-                    $(document).find('.translate-result').addClass('d-none');
-                }
-
-                Object.entries(translateData).map(([key, {result, spelling, audio}]) => {
-                    $(document).find('.data-translate').append(`
-                        <tr>
-                            <td>${key}</td>
-                            <td>${result}</td>
-                            <td>${spelling}</td>
-                            <td class="text-center">
-                                <i class="fas fa-volume-up audio-icon cursor-pointer" data-audio="${audio}"></i>
-                            </td>
-                            <td class="text-center"><i class="fas fa-trash text-danger"></i></td>
-                        </tr>
-                    `)
-                });
+                renderData();
             },
             error: function(xhr, status, error) {
             }
         });
+    });
+
+    function renderData() {
+        $(document).find('.data-translate').empty();
+
+        if (Object.keys(translateData).length) {
+            $(document).find('.translate-result').removeClass('d-none');
+        } else {
+            $(document).find('.translate-result').addClass('d-none');
+        }
+
+        Object.entries(translateData).reverse().map(([key, {result, spelling, audio}]) => {
+            $(document).find('.data-translate').append(`
+                <tr>
+                    <td>${key}</td>
+                    <td>${result}</td>
+                    <td>${spelling}</td>
+                    <td class="text-center">
+                        <i class="fas fa-volume-up audio-icon cursor-pointer" data-audio="${audio}"></i>
+                    </td>
+                    <td class="text-center">
+                        <i class="fas fa-trash text-danger delete-translate cursor-pointer" data-key="${key}"></i>
+                    </td>
+                </tr>
+            `)
+        });
+    }
+
+    $(document).on('click', '.delete-translate', function () {
+        console.log(222);
+        console.log(translateData);
+        delete translateData[$(this).data('key')];
+        renderData();
     });
 
 

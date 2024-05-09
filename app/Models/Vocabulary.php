@@ -14,6 +14,8 @@ class Vocabulary extends Model
 
     protected $fillable = [
         'text',
-        'translate'
+        'translate',
+        'spelling',
+        'pronounce'
     ];
 }
